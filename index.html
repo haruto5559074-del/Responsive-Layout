@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing Layout — Flexbox vs Grid</title>
+<style>
+  :root {
+    --ink: #22262A;
+    --ink-soft: #565F5E;
+    --paper: #F6F5F1;
+    --card: #FFFFFF;
+    --pine: #2F4B44;
+    --pine-deep: #1D302B;
+    --amber: #B9803C;
+    --line: #E4E1D8;
+    --shadow: rgba(29, 48, 43, 0.14);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    padding: 40px 16px 80px;
+  }
+
+  .page-title {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 48px;
+  }
+
+  .page-title h1 {
+    font-family: Georgia, "Iowan Old Style", serif;
+    color: var(--pine-deep);
+    font-size: 1.9rem;
+    margin: 0 0 8px;
+  }
+
+  .page-title p {
+    color: var(--ink-soft);
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .method-label {
+    display: inline-block;
+    background: var(--pine);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  /* ============ PRICING SECTION (shared look) ============ */
+  .pricing {
+    max-width: 960px;
+    margin: 0 auto 64px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px -24px var(--shadow);
+    overflow: hidden;
+  }
+
+  .pricing > header {
+    text-align: center;
+    padding: 32px 24px 8px;
+  }
+
+  .pricing > header h2 {
+    margin: 0 0 6px;
+    font-family: Georgia, serif;
+    font-size: 1.4rem;
+    color: var(--pine-deep);
+  }
+
+  .pricing > header p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  .plan {
+    flex: 1 1 0;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .plan.featured {
+    background: var(--pine-deep);
+    color: #fff;
+    border-color: var(--pine-deep);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px -16px var(--shadow);
+  }
+
+  .plan .tier {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .plan.featured .tier { color: #E7B77C; }
+
+  .plan .price {
+    font-family: Georgia, serif;
+    font-size: 2.1rem;
+    margin: 0;
+  }
+
+  .plan .price span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+  }
+
+  .plan.featured .price span { color: #C9D4D0; }
+
+  .plan ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    flex-grow: 1;
+  }
+
+  .plan.featured ul { color: #D7E0DC; }
+
+  .plan li { padding: 5px 0; }
+
+  .plan button {
+    margin-top: auto;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: 1px solid var(--pine);
+    background: transparent;
+    color: var(--pine);
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+
+  .plan.featured button {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: #fff;
+  }
+
+  .pricing > footer {
+    text-align: center;
+    padding: 20px 24px 32px;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+
+  /* ============ VERSION 1: FLEXBOX ============ */
+  .flex-container {
+    display: flex;
+    gap: 20px;
+    padding: 24px 24px 8px;
+  }
+
+  /* ============ VERSION 2: CSS GRID ============ */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 24px 24px 8px;
+  }
+
+  /* ============ RESPONSIVE: stack below 600px ============ */
+  @media (max-width: 600px) {
+    .flex-container {
+      flex-direction: column;
+    }
+
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
+
+    .plan.featured {
+      transform: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="page-title">
+    <h1>Flexbox vs Grid: The Same Pricing Section, Twice</h1>
+    <p>A 3-column pricing section built once with Flexbox and once with CSS Grid. Resize below 600px to see both stack into a single column.</p>
+  </div>
+
+  <!-- ============ VERSION 1: FLEXBOX ============ -->
+  <section class="pricing">
+    <header>
+      <span class="method-label">Version 1 · Flexbox</span>
+      <h2>Simple Pricing</h2>
+      <p>Choose the plan that fits your team</p>
+    </header>
+
+    <div class="flex-container">
+      <article class="plan">
+        <span class="tier">Starter</span>
+        <p class="price">$9<span>/month</span></p>
+        <ul>
+          <li>1 project</li>
+          <li>5 GB storage</li>
+          <li>Email support</li>
+        </ul>
+        <button>Choose Starter</button>
+      </article>
+
+      <article class="plan featured">
+        <span class="tier">Pro</span>
+        <p class="price">$29<span>/month</span></p>
+        <ul>
+          <li>10 projects</li>
+          <li>50 GB storage</li>
+          <li>Priority support</li>
+        </ul>
+        <button>Choose Pro</button>
+      </article>
+
+      <article class="plan">
+        <span class="tier">Team</span>
+        <p class="price">$79<span>/month</span></p>
+        <ul>
+          <li>Unlimited projects</li>
+          <li>500 GB storage</li>
+          <li>Dedicated support</li>
+        </ul>
+        <button>Choose Team</button>
+      </article>
+    </div>
+
+    <footer>
+      All plans include a 14-day free trial. No credit card required.
+    </footer>
+  </section>
+
+  <!-- ============ VERSION 2: CSS GRID ============ -->
+  <section class="pricing">
+    <header>
+      <span class="method-label">Version 2 · CSS Grid</span>
+      <h2>Simple Pricing</h2>
+      <p>Choose the plan that fits your team</p>
+    </header>
+
+    <div class="grid-container">
+      <article class="plan">
+        <span class="tier">Starter</span>
+        <p class="price">$9<span>/month</span></p>
+        <ul>
+          <li>1 project</li>
+          <li>5 GB storage</li>
+          <li>Email support</li>
+        </ul>
+        <button>Choose Starter</button>
+      </article>
+
+      <article class="plan featured">
+        <span class="tier">Pro</span>
+        <p class="price">$29<span>/month</span></p>
+        <ul>
+          <li>10 projects</li>
+          <li>50 GB storage</li>
+          <li>Priority support</li>
+        </ul>
+        <button>Choose Pro</button>
+      </article>
+
+      <article class="plan">
+        <span class="tier">Team</span>
+        <p class="price">$79<span>/month</span></p>
+        <ul>
+          <li>Unlimited projects</li>
+          <li>500 GB storage</li>
+          <li>Dedicated support</li>
+        </ul>
+        <button>Choose Team</button>
+      </article>
+    </div>
+
+    <footer>
+      All plans include a 14-day free trial. No credit card required.
+    </footer>
+  </section>
+
+</body>
+</html>
